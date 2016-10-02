@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
 
 @Component({
-    selector: "my-app",
-    template: `<page-router-outlet></page-router-outlet>`,
+    selector: "mip-control",
+    templateUrl: "pages/controlMip/controlMip.html",
 })
-export class AppComponent {
+export class ControlMipComponent {
     public counter: number = 16;
 
     public get message(): string {
