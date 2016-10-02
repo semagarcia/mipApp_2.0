@@ -1,7 +1,19 @@
 <StackLayout>
-    <Label text="Tap the button" class="title"></Label>
-    
-    <Button text="TAP" (tap)="onTap()"></Button>
+    <StackLayout orientation="horizontal">
+        <mip-button [urlImage]="forwardImage" [actionCode]="forwardAction" [speed]="speed"></mip-button>
+    </StackLayout>
 
-    <Label [text]="message" class="message" textWrap="true"></Label>
+    <StackLayout orientation="horizontal">
+        <mip-button [urlImage]="leftImage" [actionCode]="leftAction" [speed]="speed"></mip-button>
+        <mip-button [urlImage]="StopImage" [actionCode]="StopAction" [speed]="speed"></mip-button>
+        <mip-button [urlImage]="rightImage" [actionCode]="rightAction" [speed]="speed"></mip-button>
+    </StackLayout>
+
+    <StackLayout orientation="horizontal">
+        <mip-button [urlImage]="backImage" [actionCode]="backAction" [speed]="speed"></mip-button>
+    </StackLayout>
+
+    <Label text="Speed {{speed | number:'0.0-0'}}" class="message"></Label>
+    <mip-slider (slideChange)="updateSpeed($event)"></mip-slider>
+
 </StackLayout>

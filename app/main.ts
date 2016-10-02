@@ -9,10 +9,14 @@ import { NgModule } from "@angular/core";
 import { routes, navigatableComponents } from './app.router';
 
 import { AppComponent } from "./app.component";
+import { ButtonMipComponent } from "./pages/controlMip/buttonMip.component";
+import { SpeedMipComponent } from './pages/controlMip/speedMip.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        ButtonMipComponent,
+        SpeedMipComponent,
         ...navigatableComponents
     ],
     bootstrap: [AppComponent],
