@@ -11,6 +11,7 @@ import { routes, navigatableComponents } from './app.router';
 import { AppComponent } from "./app.component";
 import { ButtonMipComponent } from "./pages/controlMip/buttonMip.component";
 import { SpeedMipComponent } from './pages/controlMip/speedMip.component';
+import { ServiceMip } from './shared/serviceMip.service';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { SpeedMipComponent } from './pages/controlMip/speedMip.component';
         SpeedMipComponent,
         ...navigatableComponents
     ],
+    providers: [ ServiceMip ],
     bootstrap: [AppComponent],
     imports: [
         NativeScriptModule,

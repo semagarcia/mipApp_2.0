@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ServiceMip } from '../../shared/serviceMip.service';
 
 @Component({
     selector: 'mip-button',
@@ -15,7 +16,9 @@ export class ButtonMipComponent {
     @Input()
     speed:number;
 
+    constructor(private _service:ServiceMip){}
+
     doAction() {
-        console.log(`MIP robot do action ${this.actionCode} at speed ${this.speed}`);
+        this._service.move(this.actionCode, this.speed);
     }
 }
