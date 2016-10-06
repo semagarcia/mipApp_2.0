@@ -1,4 +1,7 @@
 <StackLayout>
+    <StackLayout orientation="horizontal" backgroundColor="Red" width="80%" height="10%">
+        <Label class="button" text='Close connection' (tap)="close()"></Label>
+    </StackLayout>
     <StackLayout orientation="horizontal">
         <mip-button [urlImage]="forwardImage" [actionCode]="forwardAction" [speed]="speed"></mip-button>
     </StackLayout>

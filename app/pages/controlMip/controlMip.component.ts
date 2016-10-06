@@ -1,8 +1,11 @@
 import {Component, OnInit} from "@angular/core";
+import { RouterExtensions } from "nativescript-angular/router";
+import { ServiceMip } from "../../shared/serviceMip.service";
 
 @Component({
     selector: "mip-control",
     templateUrl: "pages/controlMip/controlMip.html",
+    styleUrls: ["pages/searchMip/searchMip.css"]
 })
 export class ControlMipComponent implements OnInit {
     
@@ -23,6 +26,8 @@ export class ControlMipComponent implements OnInit {
 
     public speed:number;
 
+    constructor (private _router:RouterExtensions, private _mipService:ServiceMip){}
+
     ngOnInit(){
         this.forwardAction=113;
         this.forwardImage='~/resources/up.png';
@@ -42,5 +47,28 @@ export class ControlMipComponent implements OnInit {
 
     updateSpeed(event){
         this.speed = event;
+    }
+
+    close(){
+        console.log("Ejecutamos close");
+        let promise = this._mipService.disconnect();
+
+        if (promise){
+            console.log("Tenemos promesa");
+            promise.then(()=>{
+                this._router.navigate(['/search'],{
+                    transition:{
+                        name:'slide',
+                        duration:2000,
+                        curve:'linear'
+                    }
+                });
+            })
+            .catch(error => {
+                throw new Error(error);
+            });
+        } else {
+            console.log("No tenemos promesa");
+        }
     }
 }
