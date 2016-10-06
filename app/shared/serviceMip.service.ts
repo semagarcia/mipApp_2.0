@@ -1,42 +1,20 @@
 import { Injectable } from '@angular/core';
 import * as bluetooth from 'nativescript-bluetooth';
-import { Subscription } from 'rxjs/Subscription';
+
+import { PermissionsService } from './permissionsMip.service';
 
 const MIP_UUID:string='1C:05:43:5C:E3:54';
 
 @Injectable()
 export class ServiceMip {
 
-   private _connection = null;
+    private _connection = null;
     private _hasPermisions = false;
 
-    private _getPermisions () {
-        
-        bluetooth.hasCoarseLocationPermission()
-        .then(granted => {
-            
-            if (!granted){
-                bluetooth.requestCoarseLocationPermission()
-                .then( ()=> {
-                    this._hasPermisions = true;
-                    this._connect();
-                })
-                .catch( error => {
-                    console.log(`Error getting the permisions: ${JSON.stringify(error)}`);
-                });
-            } else {
-                this._hasPermisions= true;
-                this._connect();
-            }
-        })
-        .catch(error => {
-            console.error(`Error checking the permisions: ${JSON.stringify(error)}`);
-        });
-    }
+    constructor (private _servicePerm:PermissionsService ){}
 
 
     private _connect(){
-        console.log ('NNN Se abre la conexion');
         
         let self = this;
 
@@ -59,7 +37,15 @@ export class ServiceMip {
         if (this._hasPermisions){
             this._connect();
         } else {
-            this._getPermisions();
+            this._servicePerm.getPermissions()
+            .then(()=>{
+                this._hasPermisions=true;
+                this._connect();
+            })
+            .catch(error=>{
+                this._hasPermisions=false;
+                throw new Error(error);
+            });
         }
     }
 
