@@ -9,58 +9,32 @@ export class ServiceMip {
     private _service:string = 'ffe5';
     private _characteristic:string = 'ffe9';
 
-    constructor (private _servicePerm:PermissionsService ){}
-
+    constructor (){}
 
     public connect(uuid:string):Promise<any>{
-
+        console.log('[MIP-BLE] Connecting to UUID: ' + uuid);
         return new Promise ((resolve, reject) => {
            bluetooth.connect({
                UUID: uuid,
                onConnected: (mip) => {
-                   console.log(`Value of BLE obj: ${JSON.stringify(mip)}`)
+                   console.log(`[MIP-BLE] Value of BLE obj: ${JSON.stringify(mip)}`)
                    this._device = uuid;
                    resolve();
                },
                onDisconnected: function () {
-                  console.log('Disconected');
+                  console.log('[MIP-BLE] Disconected');
                }
            });
         });
     }
 
     public disconnect():Promise<any>{
-        let result:Promise<any>=null;
-
-        if (this._device){
-           result = bluetooth.disconnect({ UUID: this._device}); 
-        } else {
-            console.log('There is not device connected');
-        }
-
-        return result;
+        console.log(`[MIP-BLE] Disconnecting from ${this._device}...`);
+        return null;
     }
 
-    move (codeMove:number, codeSpeed:number){
-        let bluetoothMessage:any;
-        let move:string= '0x0' + new Number(codeMove).toString(16);
-        let speed:string=(codeSpeed)?'0x0' + new Number(codeSpeed).toString(16):'';
-        let distance:string='0x0' + new Number(3000).toString(16);
-
-        let valueWrite:string = move + ',' + speed + ',' + distance;
-
-        if (this._device){
-            bluetoothMessage = {
-                peripheralUUID: this._device,
-                serviceUUID: this._service,
-                characteristicUUID: this._characteristic,
-                value: valueWrite
-            }
-
-            bluetooth.write(bluetoothMessage);
-        } else {
-            console.log('There is not device connected');
-        }
+    move(codeMove:number, codeSpeed:number){
+        console.log(`[MIP-BLE] I'm moving me with code ${codeMove} and a value of ${codeSpeed} for speed`);
     }
 
 }

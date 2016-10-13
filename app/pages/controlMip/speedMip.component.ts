@@ -10,7 +10,7 @@ export class SpeedMipComponent {
     slideChange = new EventEmitter();
 
     updateValue(value:number){
-        console.log(`The value of the slider is: ${value}`);
+        console.log(`[MIP-BLE] The value of the slider is: ${value}`);
         this.slideChange.emit(value);
     }
 }
