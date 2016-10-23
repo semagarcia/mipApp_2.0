@@ -19,6 +19,6 @@ export class ButtonMipComponent {
     constructor(private _service:ServiceMip){}
 
     doAction() {
-        console.log('[MIP-BLE] The user has performed an action!');
+        this._service.move(this.actionCode, this.speed);
     }
 }

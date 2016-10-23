@@ -9,9 +9,7 @@ export class ServiceMip {
     private _service:string = 'ffe5';
     private _characteristic:string = 'ffe9';
 
-    constructor (){
-        this._device='Mip device';
-    }
+    constructor (){}
 
     public connect(uuid:string):Promise<any>{
         console.log('[MIP-BLE] Connecting to UUID: ' + uuid);
@@ -37,6 +35,25 @@ export class ServiceMip {
 
     move(codeMove:number, codeSpeed:number){
         console.log(`[MIP-BLE] I'm moving me with code ${codeMove} and a value of ${codeSpeed} for speed`);
+        let bluetoothMessage:any = null;
+        let move:string = `0x0${new Number(codeMove).toString(16)}`;
+        let speed:string = `0x0${new Number(codeSpeed).toString(16)}`;
+        let time:string = `0x0${new Number(3000).toString(16)}`;
+
+        let valueWrite = `${move},${speed},${time}`;
+
+        if (this._device) {
+             bluetoothMessage={
+                peripheralUUID: this._device,
+                serviceUUID: this._service,
+                characteristicUUID: this._characteristic,
+                value: valueWrite
+            };
+
+            bluetooth.write(bluetoothMessage);
+        } else {
+            console.log ('No device connected');
+        }
     }
 
 }
