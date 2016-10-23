@@ -6,23 +6,7 @@ export class PermissionsService {
 
     public getPermissions():Promise<any>{
         return new Promise((resolve, reject)=>{
-            bluetooth.hasCoarseLocationPermission()
-            .then(granted => {
-                if (granted){
-                    resolve();
-                } else {
-                    bluetooth.requestCoarseLocationPermission()
-                    .then(()=> {
-                        resolve();
-                    })
-                    .catch(error => {
-                        reject(error);
-                    });
-                }
-            })
-            .catch(error => {
-                reject(error);
-            });
+            resolve('The app has permissions to use the bluetooth');
         });
     }
 }

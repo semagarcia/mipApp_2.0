@@ -9,22 +9,14 @@ export class ServiceMip {
     private _service:string = 'ffe5';
     private _characteristic:string = 'ffe9';
 
-    constructor (){}
+    constructor (){
+        this._device='Mip device';
+    }
 
     public connect(uuid:string):Promise<any>{
         console.log('[MIP-BLE] Connecting to UUID: ' + uuid);
         return new Promise ((resolve, reject) => {
-           bluetooth.connect({
-               UUID: uuid,
-               onConnected: (mip) => {
-                   console.log(`[MIP-BLE] Value of BLE obj: ${JSON.stringify(mip)}`)
-                   this._device = uuid;
-                   resolve();
-               },
-               onDisconnected: function () {
-                  console.log('[MIP-BLE] Disconected');
-               }
-           });
+           resolve(`Conected to ${this._device}`);
         });
     }
 
