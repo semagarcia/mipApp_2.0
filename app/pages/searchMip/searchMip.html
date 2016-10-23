@@ -9,7 +9,7 @@
         <Label text='List of BLE devices:'></Label>
     </StackLayout>
     <StackLayout orientation="horizontal" width="100%">
-        <ListView [items]="devices" (itemTap)="deviceSelected($event)">
+        <ListView [items]="devices" (itemTap)="deviceSelected($event, activityIndicator)">
             <template let-item="item" let-i="index" let-odd="odd" let-even="even">
                 <StackLayout [class.odd]="odd" [class.even]="even">
                     <Label [text]='"UUID: " + item.UUID'></Label>

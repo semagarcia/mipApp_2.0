@@ -16,7 +16,17 @@ export class ServiceMip {
     public connect(uuid:string):Promise<any>{
         console.log('[MIP-BLE] Connecting to UUID: ' + uuid);
         return new Promise ((resolve, reject) => {
-           resolve(`Conected to ${this._device}`);
+           bluetooth.connect({
+               UUID:uuid,
+               onConnected: (device)=>{
+                   console.log (`Device: ${JSON.stringify(device)}`);
+                   this._device=uuid;
+                   resolve();
+               },
+               onDisconnected: () =>{
+                   console.log (`Disconected from device: ${this._device}`);
+               }
+           });
         });
     }
 

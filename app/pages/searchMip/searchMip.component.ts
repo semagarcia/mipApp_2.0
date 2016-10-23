@@ -29,10 +29,30 @@ export class SearchMip implements OnInit {
 
     public search(activityIndicator){
         console.log('[MIP-BLE] Searching devices...');
-        this._router.navigate(['/control']);
+        activityIndicator.busy=true;
+        this._permService.scanDevices()
+        .then(()=>{
+            this.devices = this._permService.devices;
+            activityIndicator.busy=false;
+        })
+        .catch(error => { throw new Error(error); });
+       
     }
 
-    public deviceSelected(args){
+    public deviceSelected(args, activityIndicator){
         console.log ('[MIP-BLE] Device selected: ' + this.devices[args.index].name);
+        activityIndicator.busy=true;
+        this._mipService.connect(this.devices[args.index].UUID)
+        .then(()=>{ 
+            activityIndicator.busy=false;
+            this._router.navigate(['/control'], {
+                transition: {
+                    name:'fade',
+                    duration:2000,
+                    curve:'linear'
+                }}); 
+            })
+        .catch(error=>{ throw new Error(error); });
+         
     }
 }
