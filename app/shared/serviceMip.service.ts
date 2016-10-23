@@ -30,7 +30,12 @@ export class ServiceMip {
 
     public disconnect():Promise<any>{
         console.log(`[MIP-BLE] Disconnecting from ${this._device}...`);
-        return null;
+        let result:Promise<any>= null;
+
+        if (this._device){
+            result = bluetooth.disconnect({ UUID: this._device });
+        }
+        return result;
     }
 
     move(codeMove:number, codeSpeed:number){

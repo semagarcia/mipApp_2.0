@@ -52,5 +52,18 @@ export class ControlMipComponent implements OnInit {
     close(){
         console.log("[MIP-BLE] Closing connection");
         let promise = this._mipService.disconnect();
+
+        if (promise){
+            promise.then(()=>{ console.log('Se cierra la conexion'); })
+            .catch(error=>{ throw new Error(error); });
+        }
+
+        this._router.navigate(['/search'], {
+            transition: {
+                name:'fade',
+                duration:2000,
+                curve:'linear'
+            }
+        }); 
     }
 }
